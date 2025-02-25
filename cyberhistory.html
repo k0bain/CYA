@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber History Matching Game</title>
+    <style>
+        body {
+            background-image: url('new.png');
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #765b53;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh; /* Ensures full viewport height */
+        }
+
+        h1 {
+            margin-top: 100px; /* Moves title further down */
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        #timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: #765b53;
+            margin-top: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            max-width: 90%;
+            margin: 50px auto; /* Moves the grid lower */
+        }
+
+        .card {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: white;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .card img {
+            width: 80%;
+            height: auto;
+            position: absolute;
+        }
+
+        .revealed {
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .matched {
+            visibility: hidden;
+        }
+
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+            .card {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Cyber History Matching Game</h1>
+    <p>Match the cybersecurity terms with their corresponding historical concepts! </p>
+    <p> You are being timed!</p>
+
+    
+    <h2 id="timer">🕒 Time: 0s</h2>
+    <div class="grid" id="gameBoard"></div>
+    <h2 id="message" class="hidden"></h2>
+
+    <script>
+        const pairs = [
+            { term: "Firewalls", match: "Firewalls" },
+            { term: "Encryption", match: "Encryption" },
+            { term: "Phishing", match: "Phishing" },
+            { term: "Cyber Espionage", match: "Cyber Espionage" },
+            { term: "Brute Force Attack", match: "Brute Force Attack" },
+            { term: "Secure Passwords", match: "Secure Passwords" }
+        ];
+
+        let cardPairs = pairs.flatMap(pair => [
+            { value: pair.term, display: pair.term },
+            { value: pair.match, display: pair.match }
+        ]);
+
+        let shuffledPairs = cardPairs.sort(() => Math.random() - 0.5);
+        let selectedCards = [];
+        let startTime;
+        let timerStarted = false;
+        let timerInterval;
+
+        function startTimer() {
+            if (!timerStarted) {
+                startTime = new Date().getTime();
+                timerStarted = true;
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function updateTimer() {
+            let currentTime = new Date().getTime();
+            let elapsedTime = Math.floor((currentTime - startTime) / 1000);
+            document.getElementById("timer").innerHTML = `🕒 Time: ${elapsedTime}s`;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            let endTime = new Date().getTime();
+            let timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+            return timeTaken;
+        }
+
+        function createBoard() {
+            const board = document.getElementById("gameBoard");
+            shuffledPairs.forEach((pair) => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.dataset.value = pair.value;
+
+                const img = document.createElement("img");
+                img.src = "box.png"; 
+                img.alt = "Hidden Card";
+
+                const text = document.createElement("span");
+                text.classList.add("hidden", "revealed");
+                text.textContent = pair.display;
+
+                card.appendChild(img);
+                card.appendChild(text);
+                card.onclick = () => flipCard(card, text, img);
+                board.appendChild(card);
+            });
+        }
+
+        function flipCard(card, text, img) {
+            startTimer();
+
+            if (selectedCards.length < 2 && !selectedCards.includes(card) && !card.classList.contains("matched")) {
+                img.classList.add("hidden");
+                text.classList.remove("hidden");
+                selectedCards.push(card);
+            }
+            if (selectedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = selectedCards;
+            if (card1.dataset.value === card2.dataset.value) {
+                card1.classList.add("matched");
+                card2.classList.add("matched");
+            } else {
+                card1.querySelector("img").classList.remove("hidden");
+                card1.querySelector(".revealed").classList.add("hidden");
+
+                card2.querySelector("img").classList.remove("hidden");
+                card2.querySelector(".revealed").classList.add("hidden");
+            }
+            selectedCards = [];
+
+            if (document.querySelectorAll(".card:not(.matched)").length === 0) {
+                let timeTaken = stopTimer();
+                alert(`🎉 Congratulations! You matched all pairs in ${timeTaken} seconds!`); // Displaying alert instead
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defend Diriyah Cyber Attack Simulation</title>
+    <style>
+body {
+    background-image: url('new.png');
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #765b53;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh; /* Ensures full viewport height */
+}
+
+h1 {
+    margin-top: 120px; /* Moves title down */
+}
+
+p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.question {
+    font-size: 20px;
+    margin: 30px 0; /* Moves questions down */
+}
+
+.option {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    background-color: #765b53; /* Brown buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+    text-decoration: none;
+    color: beige; /* Beige text color */
+}
+
+.option:hover {
+    background-color: #5d4942; /* Slightly darker brown on hover */
+}
+
+.hidden {
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Defend Diriyah Cyber Attack Simulation</h1>
+    <p>Choose the best response to defend the digital fortress!</p>
+    
+    <div id="question1">
+        <div class="question">A suspicious email asks for your login credentials. What do you do?</div>
+        <div class="option" onclick="wrongAnswer()">Enter the details quickly</div>
+        <div class="option" onclick="nextQuestion('question1', 'question2')">Verify the sender before taking action</div>
+        <div class="option" onclick="wrongAnswer()">Ignore it completely</div>
+    </div>
+    
+    <div id="question2" class="hidden">
+        <div class="question">Your network is showing unusually high traffic. What should you check first?</div>
+        <div class="option" onclick="wrongAnswer()">Turn off your computer</div>
+        <div class="option" onclick="wrongAnswer()">Wait and see if it stops</div>
+        <div class="option" onclick="nextQuestion('question2', 'question3')">Check firewall and logs for suspicious activity</div>
+    </div>
+    
+    <div id="question3" class="hidden">
+        <div class="question">A pop-up says your computer is infected. What is the best response?</div>
+        <div class="option" onclick="wrongAnswer()">Click the link to "fix" the issue</div>
+        <div class="option" onclick="nextQuestion('question3', 'winScreen')">Close the pop-up and scan with a trusted antivirus</div>
+        <div class="option" onclick="wrongAnswer()">Ignore and continue browsing</div>
+    </div>
+    
+    <div id="winScreen" class="hidden">
+        <h2>Congratulations! 🎉</h2>
+        <p>You successfully defended Diriyah from cyber threats!</p>
+    </div>
+
+    <script>
+        function nextQuestion(currentId, nextId) {
+            document.getElementById(currentId).classList.add('hidden'); // Hide current question
+            document.getElementById(nextId).classList.remove('hidden'); // Show next question
+        }
+
+        function wrongAnswer() {
+            alert("Incorrect choice! Try again.");
+        }
+    </script>
+</body>
+</html> 
+
+

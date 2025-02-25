@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudi Cyber Maze</title>
+    <style>
+        body {
+    background-image: url('new.png');
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #765b53;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh; /* Ensure full viewport height */
+}
+
+h1 {
+    margin-top: 120px; /* Pushes the heading further down */
+}
+
+p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.maze-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+    gap: 15px;
+    max-width: 90%;
+    margin: 50px auto;
+}
+
+.option {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    background-color: #765b53; /* Brown buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+    text-decoration: none;
+    color: beige; /* Text color beige */
+}
+
+.option:hover {
+    background-color: #5d4942; /* Slightly darker brown on hover */
+}
+
+.hidden {
+    display: none;
+}
+
+.message {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: green;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Saudi Cyber Maze</h1>
+    <p>Select the strongest passwords to reach the exit! But beware, the wrong choices will reset your progress.</p>
+    
+    <div id="step1" class="maze-container">
+        <div class="option" onclick="resetGame()">Saudi$$Riyal123</div>
+        <div class="option" onclick="resetGame()">Saud!@iAr@bia</div>
+        <div class="option" onclick="resetGame()">SaudiFoundingDay1</div>
+        <div class="option" onclick="nextStep('step2')">R!y@dh1972$%</div>
+    </div>
+    
+    <div id="step2" class="maze-container hidden">
+        <div class="option" onclick="resetGame()">NajdHejaz@</div>
+        <div class="option" onclick="nextStep('step3')">N@jd1932_&!x</div>
+        <div class="option" onclick="resetGame()">Jeddah@123</div>
+        <div class="option" onclick="resetGame()">QassimDates786</div>
+    </div>
+    
+    <div id="step3" class="maze-container hidden">
+        <div class="option" onclick="resetGame()">DhahranOil@</div>
+        <div class="option" onclick="nextStep('step4')">P@lmTr33!King</div>
+        <div class="option" onclick="resetGame()">DiriyahGate2025</div>
+        <div class="option" onclick="resetGame()">TaifRoses@</div>
+    </div>
+    
+    <div id="step4" class="maze-container hidden">
+        <div class="option" onclick="nextStep('step5')">D!riyahF0rt_99</div>
+        <div class="option" onclick="resetGame()">HajjMakkah#</div>
+        <div class="option" onclick="resetGame()">AramcoOil123</div>
+        <div class="option" onclick="resetGame()">NeomFutureKing</div>
+    </div>
+    
+    <div id="step5" class="maze-container hidden">
+        <div class="option" onclick="resetGame()">Vision2030</div>
+        <div class="option" onclick="resetGame()">DesertFalcon!</div>
+        <div class="option" onclick="resetGame()">Mbs_2030@</div>
+        <div class="option" onclick="winGame()">%Cyb3r_Ar@bia</div>
+    </div>
+    
+    <h2 id="message" class="message hidden"></h2>
+    
+    <script>
+        function nextStep(stepId) {
+            document.querySelectorAll('.maze-container').forEach(el => el.classList.add('hidden'));
+            document.getElementById(stepId).classList.remove('hidden');
+        }
+        function resetGame() {
+            alert("Incorrect choice! You must restart from the beginning.");
+            document.querySelectorAll('.maze-container').forEach(el => el.classList.add('hidden'));
+            document.getElementById('step1').classList.remove('hidden');
+        }
+        function winGame() {
+            document.querySelectorAll('.maze-container').forEach(el => el.classList.add('hidden'));
+            document.getElementById("message").textContent = "Congratulations! You escaped the Saudi Cyber Maze!";
+            document.getElementById("message").classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
